@@ -1,10 +1,12 @@
 package tests;
 
+import io.qameta.allure.restassured.AllureRestAssured;
 import models.AuthorizedBodyModel;
 import models.AuthorizedResponseModel;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static org.hamcrest.Matchers.is;
@@ -19,14 +21,13 @@ public class AuthorizedTests extends BaseTest{
         body.setPassword("!Aa12345678");
 
     given()
+        .filter(new AllureRestAssured())
         .body(body)
         .contentType(JSON)
         .log().uri()
     .when()
         .post("/Account/v1/Authorized")
     .then()
-        .log().status()
-        .log().body()
         .statusCode(200)
         .body("$", is(true));
     }
@@ -39,6 +40,7 @@ public class AuthorizedTests extends BaseTest{
         body.setPassword("!Aa12345678");
 
     given()
+        .filter(new AllureRestAssured())
         .body(body)
         .contentType(JSON)
         .log().uri()
@@ -57,7 +59,8 @@ public class AuthorizedTests extends BaseTest{
 
     String data = "";
 
-    AuthorizedResponseModel response = given()
+    AuthorizedResponseModel response =  step("Отправить запрос", () -> given()
+        .filter(new AllureRestAssured())
         .body(data)
         .contentType(JSON)
         .log().uri()
@@ -67,10 +70,12 @@ public class AuthorizedTests extends BaseTest{
         .log().status()
         .log().body()
         .statusCode(400)
-        .extract().as(AuthorizedResponseModel.class);
+        .extract().as(AuthorizedResponseModel.class));
 
+    step("Проверить код и сообщение ответа", () -> {
         Assertions.assertEquals("1200", response.getCode());
         Assertions.assertEquals("UserName and Password required.", response.getMessage());
+    });
 
     }
 
