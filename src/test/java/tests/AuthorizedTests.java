@@ -1,11 +1,18 @@
 package tests;
 
 import io.qameta.allure.restassured.AllureRestAssured;
+import io.restassured.response.Response;
 import models.AuthorizedBodyModel;
 import models.AuthorizedResponseModel;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.Cookie;
 
+import java.util.Map;
+
+import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.sleep;
+import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
@@ -16,9 +23,7 @@ public class AuthorizedTests extends BaseTest{
     @Test
     void successfulAuthorized() {
 
-        AuthorizedBodyModel body = new AuthorizedBodyModel();
-        body.setUserName("Ttest");
-        body.setPassword("!Aa12345678");
+        AuthorizedBodyModel body = new AuthorizedBodyModel(config.getLogin(), config.getPassword());
 
     given()
         .filter(new AllureRestAssured())
@@ -35,9 +40,7 @@ public class AuthorizedTests extends BaseTest{
     @Test
     void unsuccessfulNotFoundUser404Authorized() {
 
-        AuthorizedBodyModel body = new AuthorizedBodyModel();
-        body.setUserName("Ttest1");
-        body.setPassword("!Aa12345678");
+        AuthorizedBodyModel body = new AuthorizedBodyModel(config.getLogin(), config.getPassword());
 
     given()
         .filter(new AllureRestAssured())

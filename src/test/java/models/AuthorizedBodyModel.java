@@ -7,5 +7,10 @@ import lombok.Setter;
 @Setter
 public class AuthorizedBodyModel {
 
-    String userName, password;
+    private String userName, password;
+
+    public AuthorizedBodyModel(String userName, String password){
+        this.userName = userName;
+        this.password = password;
+    }
 }

@@ -5,4 +5,4 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AuthorizedResponseModel {private String code, message;}
+public class SessionData {private String userID, expires, token;}

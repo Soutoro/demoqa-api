@@ -1,10 +1,8 @@
 package tests;
 
-
 import io.qameta.allure.restassured.AllureRestAssured;
 import org.junit.jupiter.api.Test;
 
-import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.equalTo;
 
@@ -46,16 +44,5 @@ public class AllBooksTests extends BaseTest {
                 .body("books.findAll {it.pages > 400}.pages.size()", equalTo(2));
 
     }
-
-//    @Test
-//    public void checkBook3() {
-//
-//        step("Тест", () -> {given()
-//                .filter(new AllureRestAssured())
-//                .when()
-//                .get("/BookStore/v1/Books")
-//                .then()
-//                .body("books.size()", equalTo(8));});
-//    }
 
 }
