@@ -20,6 +20,7 @@ public class BaseTest {
     @BeforeAll
     public static void setUp() {
         Configuration.baseUrl = config.getBaseUrl();
+        Configuration.browserSize = config.getBrowserSize();
         RestAssured.baseURI = config.getBaseUrl();
         RestAssured.requestSpecification = new RequestSpecBuilder()
                 .log(LogDetail.ALL)
