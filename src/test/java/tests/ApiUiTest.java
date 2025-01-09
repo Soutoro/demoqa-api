@@ -10,6 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Cookie;
 import steps.AddAndDeleteBookSteps;
+import steps.AuthorizationSteps;
 
 
 import static com.codeborne.selenide.Condition.*;
@@ -21,8 +22,11 @@ import static io.restassured.http.ContentType.JSON;
 
 public class ApiUiTest extends BaseTest{
 
+    AddAndDeleteBookSteps addAndDeleteBookSteps = new AddAndDeleteBookSteps();
+    AuthorizationSteps authorizationSteps = new AuthorizationSteps();
+
     @Test
-    @DisplayName("Добавление книги через api и удаление через ui")
+    @DisplayName("Добавление книги через api и удаление через ui(старая версия)")
     public void addBookWithApiAndDeleteWithUi1() {
         AuthorizedBodyModel loginBody = new AuthorizedBodyModel(config.getLogin(), config.getPassword());
 
@@ -69,10 +73,10 @@ public class ApiUiTest extends BaseTest{
     @Test
     @DisplayName("Добавление книги в пустую таблицу через api и удаление через ui")
     public void addBookWithApiAndDeleteWithUi() {
-        AddAndDeleteBookSteps addAndDeleteBookSteps = new AddAndDeleteBookSteps();
 
-        addAndDeleteBookSteps.authorizationWithApi();
+        authorizationSteps.authorizationWithApi();
         addAndDeleteBookSteps.addBookWithApi();
+        authorizationSteps.openPageWithCookie();
         addAndDeleteBookSteps.deleteBookWithUI();
 
     }
